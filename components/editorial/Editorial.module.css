@@ -1,0 +1,778 @@
+.h1 {
+  font-size: var(--t-h1);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.hero2 {
+  font-size: clamp(56px, 3rem + 6vw, 144px);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+}
+
+/* ---------------------------------------------------------------- HERO */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  margin-top: calc(-1 * var(--header-h));
+  color: var(--haq-ivory);
+  overflow: hidden;
+  background: var(--haq-ivory);
+}
+
+.heroMedia {
+  position: absolute !important;
+  inset: 0;
+  height: 100%;
+  transform-origin: 50% 0;
+}
+
+/* Scroll-driven 100% → 94% scale; ivory shows behind. No JS, no scroll-jacking. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .heroMedia {
+      animation: heroShrink linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 70%;
+    }
+    .heroContent {
+      animation: heroFade linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 40%;
+    }
+  }
+}
+
+@keyframes heroShrink {
+  to {
+    transform: scale(0.94);
+  }
+}
+
+@keyframes heroFade {
+  to {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+}
+
+.heroShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.35) 0%, transparent 28%, transparent 55%, rgba(10, 10, 10, 0.55) 100%);
+}
+
+.heroContent {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: var(--s-4);
+  padding: var(--page-x);
+  padding-bottom: clamp(32px, 7vh, 80px);
+}
+
+.heroMark {
+  position: absolute;
+  top: calc(var(--header-h) + 8px);
+  left: var(--page-x);
+  font-size: clamp(96px, 24vw, 380px);
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+}
+
+.heroTitle {
+  font-size: var(--t-hero);
+  max-width: 11ch;
+}
+
+.heroSub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(18px, 1rem + 0.8vw, 26px);
+}
+
+@media (max-height: 760px) and (min-width: 641px) {
+  .heroMark {
+    font-size: clamp(80px, 16vw, 240px);
+  }
+}
+
+/* ---------------------------------------------------------------- DROP */
+
+.drop {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--s-9);
+  padding-inline: var(--page-x);
+  align-items: center;
+}
+
+.dropText {
+  display: grid;
+  gap: var(--s-5);
+  justify-items: start;
+}
+
+.dropLines {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1rem + 0.6vw, 24px);
+  line-height: 1.35;
+}
+
+.dropImages {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--gutter);
+  align-items: end;
+}
+
+.dropSmall {
+  margin-bottom: var(--s-10);
+}
+
+@media (max-width: 860px) {
+  .drop {
+    grid-template-columns: 1fr;
+    gap: var(--s-7);
+  }
+  .dropSmall {
+    margin-bottom: var(--s-8);
+  }
+}
+
+/* ---------------------------------------------------------------- WHAT ARE YOU WEARING */
+
+.wearing {
+  padding-left: var(--page-x);
+}
+
+.wearingHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--s-5);
+  padding-right: var(--page-x);
+  margin-bottom: var(--s-7);
+}
+
+.wearingHead h2 {
+  max-width: 12ch;
+}
+
+.wearingRow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - var(--page-x) - 3 * var(--gutter)) / 4);
+  gap: var(--gutter);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-right: var(--page-x);
+}
+
+.wearingRow::-webkit-scrollbar {
+  display: none;
+}
+
+.wearingRow > li {
+  scroll-snap-align: start;
+}
+
+.wearingCard {
+  position: relative;
+  display: block;
+  color: var(--haq-ivory);
+}
+
+.wearingMeta {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wearingLook {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 3;
+  display: grid;
+  gap: 4px;
+  padding: var(--s-5) 14px 14px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1.15;
+  background: linear-gradient(transparent, rgba(10, 10, 10, 0.7));
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--d-nav) var(--ease),
+    transform var(--d-nav) var(--ease);
+}
+
+.wearingLook .mono {
+  margin-top: 8px;
+}
+
+.wearingCard:hover .wearingLook,
+.wearingCard:focus-visible .wearingLook {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: none) {
+  .wearingLook {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .wearingRow {
+    grid-auto-columns: 74%;
+  }
+  .wearingHead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ---------------------------------------------------------------- WHERE */
+
+.where {
+  padding: var(--s-11) var(--page-x);
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: var(--s-9);
+}
+
+.whereQ {
+  font-size: var(--t-h1);
+  max-width: 16ch;
+  line-height: 0.95;
+}
+
+.wherePlaces {
+  display: grid;
+  gap: clamp(28px, 6vh, 72px);
+}
+
+.wherePlace {
+  font-size: clamp(32px, 1.5rem + 3vw, 72px);
+  color: var(--haq-silver);
+}
+
+.whereEnd {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-6);
+}
+
+.wherever {
+  font-size: clamp(72px, 2rem + 13vw, 260px);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+}
+
+/* ---------------------------------------------------------------- SHOP THE LOOK */
+
+.stl {
+  padding-block: var(--section-commerce);
+}
+
+.stlFrame {
+  position: relative;
+}
+
+.marker {
+  position: absolute;
+  z-index: 3;
+  color: var(--haq-ivory);
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+}
+
+.markerTip {
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity var(--d-ui) var(--ease);
+}
+
+.marker:hover .markerTip,
+.marker:focus-visible .markerTip,
+.marker[aria-pressed="true"] .markerTip {
+  opacity: 1;
+}
+
+.marker[aria-pressed="true"] {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+.stlBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-5);
+  padding: var(--s-4) var(--page-x) 0;
+  flex-wrap: wrap;
+}
+
+.stlList {
+  display: flex;
+  gap: var(--s-5);
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .markerTip {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------------------- CATEGORY TRIO */
+
+.trio {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: var(--gutter);
+  padding: var(--section-commerce) var(--page-x);
+  align-items: end;
+}
+
+.trioItem {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.trioItem:nth-child(2) {
+  margin-bottom: var(--s-9);
+}
+
+.trioLabel {
+  font-size: clamp(28px, 1.2rem + 1.6vw, 44px);
+}
+
+@media (max-width: 860px) {
+  .trio {
+    grid-template-columns: 1fr 1fr;
+  }
+  .trioItem:first-child {
+    grid-column: 1 / -1;
+  }
+  .trioItem:nth-child(2) {
+    margin-bottom: 0;
+  }
+}
+
+/* ---------------------------------------------------------------- CRAFT */
+
+.craft {
+  padding-bottom: var(--section-editorial);
+}
+
+.craftBody {
+  display: grid;
+  gap: var(--s-9);
+  margin-top: var(--s-9);
+}
+
+.craftText {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+  max-width: 760px;
+}
+
+.craftLine {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1rem + 1vw, 30px);
+  line-height: 1.2;
+}
+
+/* ---------------------------------------------------------------- QUOTE */
+
+.quote {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--s-9);
+  padding-inline: var(--page-x);
+  align-items: center;
+}
+
+.quote > div {
+  display: grid;
+  gap: var(--s-5);
+  justify-items: start;
+}
+
+.quoteAnswer {
+  font-size: clamp(32px, 1.5rem + 2.5vw, 64px);
+  color: var(--haq-sindoor);
+}
+
+@media (max-width: 860px) {
+  .quote {
+    grid-template-columns: 1fr;
+    gap: var(--s-7);
+  }
+}
+
+/* ---------------------------------------------------------------- GRID INTERRUPTIONS */
+
+.gridStatement {
+  padding: var(--s-9) 0;
+  text-align: center;
+  display: grid;
+  gap: var(--s-3);
+  border-block: 1px solid var(--rule);
+}
+
+.gridStatement .display-italic {
+  font-size: 24px;
+}
+
+.gridImage {
+  display: grid;
+  gap: var(--s-3);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------- BATHROOM */
+
+.bath {
+  padding-inline: var(--page-x);
+}
+
+.bathHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--s-5);
+  margin-bottom: var(--s-8);
+  flex-wrap: wrap;
+}
+
+.bathHead .display-italic {
+  font-size: clamp(18px, 1rem + 0.6vw, 24px);
+}
+
+.bathGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gutter);
+  align-items: start;
+}
+
+.bath_hero {
+  grid-column: 1 / span 6;
+  grid-row: span 2;
+}
+
+.bath_tall {
+  grid-column: 8 / span 3;
+  margin-top: var(--s-9);
+}
+
+.bath_wide {
+  grid-column: 7 / span 6;
+  margin-top: calc(-1 * var(--s-8));
+  position: relative;
+  z-index: 1;
+}
+
+.bath_small {
+  grid-column: 3 / span 3;
+  margin-top: var(--s-6);
+}
+
+.bath_empty {
+  grid-column: 7 / span 4;
+  align-self: center;
+  padding: var(--s-6) 0;
+  color: var(--muted);
+}
+
+.bathItem {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.bathCap {
+  display: grid;
+  gap: 2px;
+}
+
+.bathCap .display-italic {
+  font-size: 20px;
+}
+
+@media (max-width: 860px) {
+  .bathGrid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .bath_hero {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+  .bath_tall {
+    grid-column: 1 / span 3;
+    margin-top: 0;
+  }
+  .bath_small {
+    grid-column: 4 / span 3;
+    margin-top: var(--s-9);
+  }
+  .bath_wide {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+  .bath_empty {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------------------------------------------------------------- HAQ GIRL */
+
+.girl {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--s-9);
+  padding-inline: var(--page-x);
+  align-items: center;
+}
+
+.girlText {
+  display: grid;
+  gap: var(--s-5);
+  justify-items: start;
+}
+
+.girlQuote {
+  font-size: clamp(24px, 1rem + 1.5vw, 40px);
+  line-height: 1.15;
+}
+
+.girlLook {
+  display: grid;
+  gap: 4px;
+  margin-top: var(--s-2);
+}
+
+.girlLook li {
+  display: flex;
+  gap: var(--s-4);
+  align-items: baseline;
+}
+
+@media (max-width: 860px) {
+  .girl {
+    grid-template-columns: 1fr;
+    gap: var(--s-7);
+    padding-inline: 0;
+  }
+  .girlText {
+    padding-inline: var(--page-x);
+  }
+}
+
+/* ---------------------------------------------------------------- RADIO */
+
+.radio {
+  padding: var(--s-7) var(--page-x);
+  display: grid;
+  gap: var(--s-6);
+  border-top: 1px solid var(--rule);
+}
+
+.radioBar {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: center;
+  gap: var(--s-5);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: var(--s-5);
+}
+
+.play {
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--rule);
+  display: grid;
+  place-items: center;
+}
+
+.play:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.radioNow {
+  display: grid;
+  gap: 2px;
+}
+
+.radioTabs {
+  display: flex;
+  gap: var(--s-6);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.radioTab {
+  font-size: clamp(24px, 1rem + 1.6vw, 44px);
+  color: var(--muted);
+  white-space: nowrap;
+  min-height: 44px;
+}
+
+.radioTab[aria-selected="true"],
+.radioTab:hover {
+  color: var(--fg);
+}
+
+.radioMood {
+  font-size: var(--t-small);
+}
+
+@media (max-width: 640px) {
+  .radioBar {
+    grid-template-columns: auto 1fr;
+  }
+  .radioBar > :first-child,
+  .radioBar > :last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------------------------------------------------------------- FRIDAY MODULE */
+
+.friday {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-9);
+  padding: var(--section-editorial) var(--page-x);
+  align-items: center;
+}
+
+.fridayText {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.fridayText > .display-italic {
+  font-size: 28px;
+}
+
+@media (max-width: 860px) {
+  .friday {
+    grid-template-columns: 1fr;
+    gap: var(--s-7);
+  }
+}
+
+/* ---------------------------------------------------------------- CRAFT INDEX */
+
+.indexHead {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--s-5);
+  margin-bottom: var(--s-6);
+}
+
+.indexList {
+  list-style: none;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.indexRow {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1.2fr) minmax(0, 2fr) 160px;
+  align-items: baseline;
+  gap: var(--s-5);
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--rule);
+  transition: padding var(--d-nav) var(--ease);
+}
+
+.indexRow:hover {
+  padding-left: var(--s-4);
+}
+
+.indexName {
+  font-size: clamp(32px, 1.5rem + 2vw, 64px);
+  line-height: 1;
+}
+
+.indexRow:hover .indexName {
+  font-style: italic;
+}
+
+@media (max-width: 860px) {
+  .indexHead {
+    grid-template-columns: 1fr;
+  }
+  .indexRow {
+    grid-template-columns: 32px 1fr;
+  }
+  .indexLine,
+  .indexRow > .mono:last-child {
+    grid-column: 2;
+  }
+}
+
+/* ---------------------------------------------------------------- MARQUEE */
+
+.marquee {
+  overflow: hidden;
+  border-block: 1px solid var(--rule);
+  padding-block: var(--s-4);
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  font-size: clamp(24px, 1rem + 1.5vw, 40px);
+  white-space: nowrap;
+  animation: marquee 60s linear infinite;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------------------------------------------------------------- PAGE INTRO */
+
+.pageIntro {
+  padding: var(--s-9) var(--page-x) var(--s-7);
+  display: grid;
+  gap: var(--s-4);
+}
+
+.pageIntroBody {
+  max-width: 56ch;
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1rem + 0.5vw, 22px);
+  line-height: 1.35;
+  display: grid;
+  gap: var(--s-3);
+}
