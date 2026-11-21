@@ -2,9 +2,11 @@ import type { MetadataRoute } from "next";
 import { CATEGORIES, getAllProducts } from "@/lib/commerce";
 import { getCrafts, getDrops, getGirls } from "@/lib/content";
 import { SITE_URL } from "@/lib/format";
+import { LAUNCH_MODE } from "@/lib/launch";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
+  if (LAUNCH_MODE === "coming-soon") return [{ url: `${SITE_URL}/`, lastModified: now }];
   const paths = [
     "/",
     "/new",

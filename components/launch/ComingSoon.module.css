@@ -1,0 +1,244 @@
+/* HAQ — Coming Soon. Ivory lead panel, ink launch sheet, nothing else. */
+
+.page {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: var(--haq-ivory);
+  color: var(--haq-ink);
+}
+
+/* ---------------------------------------------------------------- top bar */
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-h);
+  padding-inline: var(--page-x);
+  border-bottom: 1px solid var(--rule);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+/* ---------------------------------------------------------------- main */
+
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(320px, 1fr);
+}
+
+.lead {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--s-5);
+  padding: var(--s-8) var(--page-x) var(--s-8);
+}
+
+.kicker {
+  color: var(--muted);
+}
+
+.mark {
+  font-size: clamp(120px, 22vw, 360px);
+  line-height: 0.78;
+  letter-spacing: -0.035em;
+  margin-left: -0.04em;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: clamp(14px, 0.8rem + 0.4vw, 18px);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-top: var(--s-4);
+}
+
+.line {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1rem + 1vw, 30px);
+  line-height: 1.25;
+  max-width: 28ch;
+}
+
+.action {
+  max-width: 520px;
+  margin-top: var(--s-5);
+}
+
+.soon {
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------------------------------------------------------------- form */
+
+.form {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  border: 1px solid var(--haq-ink);
+}
+
+.input {
+  min-height: 56px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+}
+
+.input::placeholder {
+  color: var(--muted);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.field:focus-within {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.submit {
+  min-height: 56px;
+  padding: 0 28px;
+  background: var(--haq-ink);
+  color: var(--haq-ivory);
+  font-size: var(--t-meta);
+  letter-spacing: var(--track-meta);
+  text-transform: uppercase;
+  transition:
+    background var(--d-ui) var(--ease),
+    color var(--d-ui) var(--ease);
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--haq-ivory);
+  color: var(--haq-ink);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.consent {
+  font-size: 10px;
+}
+
+.done {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-4) 0;
+  border-top: 1px solid var(--haq-ink);
+}
+
+.done :global(.display-italic) {
+  font-size: 22px;
+}
+
+/* ---------------------------------------------------------------- launch sheet */
+
+.sheet {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-8);
+  padding: var(--s-8) var(--page-x);
+}
+
+.rows {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.row dd {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.sign {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(28px, 1rem + 2vw, 48px);
+  line-height: 1.05;
+  max-width: 12ch;
+}
+
+.ghost {
+  position: absolute;
+  right: -0.06em;
+  bottom: -0.18em;
+  font-size: clamp(200px, 26vw, 420px);
+  line-height: 1;
+  color: rgba(245, 241, 232, 0.06);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- footer */
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--page-x);
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------------------------------------------------------------- mobile */
+
+@media (max-width: 900px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+  .lead {
+    justify-content: flex-start;
+    padding-top: var(--s-7);
+    padding-bottom: var(--s-8);
+  }
+  .sheet {
+    padding-block: var(--s-7);
+    gap: var(--s-7);
+  }
+  .field {
+    grid-template-columns: 1fr;
+  }
+  .submit {
+    border-top: 1px solid var(--haq-ink);
+  }
+}
+
+@media (max-width: 420px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
